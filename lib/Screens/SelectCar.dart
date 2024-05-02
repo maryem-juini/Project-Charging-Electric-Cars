@@ -19,6 +19,7 @@ class _RadioButtonContainerState extends State<RadioButtonContainer> {
             'Select your car ',
             style: TextStyle(
               fontWeight: FontWeight.bold,
+              color: Color(0xFF06094C),
             ),
           ),
           leading: IconButton(
