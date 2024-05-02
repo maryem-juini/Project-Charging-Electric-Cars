@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project/Screens/BookingPage.dart';
+import 'package:project/Screens/MyBooking.dart';
 import 'package:project/Screens/HomePage.dart';
 import 'package:project/Screens/ProfilePage.dart';
 import 'package:project/Screens/SearchPage.dart';
