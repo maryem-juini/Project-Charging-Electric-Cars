@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_rating_stars/animated_rating_stars.dart';
+import 'package:project/Screens/Bottom.dart';
+import 'package:project/Screens/Header.dart';
 
 class Station extends StatefulWidget {
   const Station({super.key});
@@ -15,53 +17,8 @@ class _StationState extends State<Station> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: Image.asset('assets/logo-dark-large.png',
-              width: size.width * 0.3, height: size.height * 0.3),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          elevation: 5,
-        ),
-        bottomNavigationBar: Container(
-          height: 60,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, 3),
-              ),
-            ],
-          ),
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 60.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {},
-                  child: Icon(Icons.home_rounded,
-                      size: 35, color: Color(0xffFBAA1B)),
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Icon(Icons.search, size: 35, color: Color(0xFF06094C)),
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Icon(Icons.book, size: 35, color: Color(0xFF06094C)),
-                ),
-                GestureDetector(
-                  onTap: () {},
-                  child: Icon(Icons.person, size: 35, color: Color(0xFF06094C)),
-                ),
-              ],
-            ),
-          ),
-        ),
+        appBar: HeaderPage(),
+        bottomNavigationBar: BottomPage(selectedIndex: 0),
         body: SingleChildScrollView(
           child: Column(
               mainAxisAlignment: MainAxisAlignment.start,

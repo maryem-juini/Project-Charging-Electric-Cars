@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:project/Screens/Bottom.dart';
 import 'package:project/Screens/Header.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
-
 class BookingPage extends StatefulWidget {
   const BookingPage({super.key});
 
