@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "869621447725",
+    "project_id": "electric-cars-charging-project",
+    "storage_bucket": "electric-cars-charging-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869621447725:android:f01d015af1a29360f50ca4",
+        "android_client_info": {
+          "package_name": "com.example.project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARKVx4NtEA6Ug6hIV9GHIzaySdRth2Xr4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
