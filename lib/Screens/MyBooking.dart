@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project/Screens/Bottom.dart';
 import 'package:project/Screens/Header.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
+
 class BookingPage extends StatefulWidget {
   const BookingPage({super.key});
 
@@ -109,7 +110,9 @@ class _BookingPageState extends State<BookingPage> {
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                       )),
-                                      SizedBox(width: size.width*0.35,),
+                                  SizedBox(
+                                    width: size.width * 0.35,
+                                  ),
                                   Text('15Km',
                                       style: TextStyle(
                                         fontSize: 20,
@@ -123,7 +126,8 @@ class _BookingPageState extends State<BookingPage> {
                               ),
                               SizedBox(height: 10),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 children: [
                                   Column(
                                     children: [
@@ -133,7 +137,9 @@ class _BookingPageState extends State<BookingPage> {
                                             fontWeight: FontWeight.bold,
                                             color: Color(0xFF555555),
                                           )),
-                                      SizedBox(height: 7,),
+                                      SizedBox(
+                                        height: 7,
+                                      ),
                                       Text('Tesla (Plug)'),
                                     ],
                                   ),
@@ -145,7 +151,9 @@ class _BookingPageState extends State<BookingPage> {
                                             fontWeight: FontWeight.bold,
                                             color: Color(0xFF555555),
                                           )),
-                                      SizedBox(height: 7,),
+                                      SizedBox(
+                                        height: 7,
+                                      ),
                                       Text('100kW'),
                                     ],
                                   ),
@@ -157,7 +165,9 @@ class _BookingPageState extends State<BookingPage> {
                                             fontWeight: FontWeight.bold,
                                             color: Color(0xFF555555),
                                           )),
-                                      SizedBox(height: 7,),
+                                      SizedBox(
+                                        height: 7,
+                                      ),
                                       Text('1 hour'),
                                     ],
                                   ),
@@ -169,7 +179,9 @@ class _BookingPageState extends State<BookingPage> {
                                             fontWeight: FontWeight.bold,
                                             color: Color(0xFF555555),
                                           )),
-                                      SizedBox(height: 7,),
+                                      SizedBox(
+                                        height: 7,
+                                      ),
                                       Text('30 Dinars'),
                                     ],
                                   ),
@@ -181,7 +193,53 @@ class _BookingPageState extends State<BookingPage> {
                                   height: size.height * 0.06,
                                   width: size.width * 0.3,
                                   child: ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text(
+                                              'Cancel Booking',
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 255, 0, 0),
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            content: Text(
+                                              'Are you sure you want to cancel this booking?',
+                                            ),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: Text(
+                                                  'No',
+                                                  style: TextStyle(
+                                                    color: Color(0xFFFBAA1B),
+                                                  ),
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                              TextButton(
+                                                child: Text(
+                                                  'Yes',
+                                                  style: TextStyle(
+                                                    color: Color(0xFFFBAA1B),
+                                                  ),
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(
+                                                  20), // Change this to your desired value
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
                                     child: Text(
                                       "Cancel Booking",
                                       style: TextStyle(
@@ -214,7 +272,7 @@ class _BookingPageState extends State<BookingPage> {
                                           RoundedRectangleBorder>(
                                         RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
-                                              5.0), // Adjust the radius as needed
+                                              10.0), // Adjust the radius as needed
                                         ),
                                       ),
                                     ),
