@@ -10,7 +10,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  List<String> previousSearches = ['Taffela Sousse', 'Taffela Sousse'];
+  List<String> previousSearches = ['Taffela Sousse', 'Hammam Sousse','Sahloul Sousse','Kantaoui Sousse','Hergla Sousse'];
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class _SearchPageState extends State<SearchPage> {
                           if (direction == DismissDirection.startToEnd) {
                             previousSearches.removeAt(index);
                           } else {
-                            previousSearches.removeAt(index-1);
+                            previousSearches.removeAt(index);
                           }
                         });
                         ScaffoldMessenger.of(context).showSnackBar(

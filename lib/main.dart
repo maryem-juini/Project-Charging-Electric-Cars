@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project/Screens/MyBooking.dart';
 import 'package:project/Screens/SearchPage.dart';
 
 void main() {
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: BookingPage(),
+      home: SearchPage(),
     );
   }
 }
