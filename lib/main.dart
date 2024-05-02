@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:project/Screens/EnterCarDetails.dart';
+import 'package:project/Screens/OtpLogic.dart';
 import 'package:project/firebase_options.dart';
 
 void main() async{
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: EnterCarDetailsPage(),
+      home: OTPScreen(),
     );
   }
 }

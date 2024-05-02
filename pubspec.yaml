@@ -34,7 +34,7 @@ dependencies:
   contained_tab_bar_view: ^0.8.0
   firebase_core: ^2.26.0
   firebase_auth: ^4.17.7
-  firebase_core_web: ^2.15.0
+  
 
 
 
