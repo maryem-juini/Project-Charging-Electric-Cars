@@ -1,5 +1,8 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_intl_phone_field/flutter_intl_phone_field.dart';
+import 'package:flutter_intl_phone_field/phone_number.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -9,6 +12,7 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+  PhoneNumber otp = PhoneNumber(countryISOCode: 'TN', countryCode: '216', number: '0') ;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -38,7 +42,7 @@ class _SignupState extends State<Signup> {
                   ),
                   initialCountryCode: 'IN',
                   onChanged: (phone) {
-                    print(phone.completeNumber);
+                    otp=phone ; 
                   },
                 ),
               ),
