@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:project/Screens/EnterCarDetails.dart';
+import 'package:project/Screens/CompleteProfile.dart';
+import 'package:project/Screens/LogIn.dart';
 import 'package:project/firebase_options.dart';
 
 void main() async{
@@ -9,7 +10,6 @@ void main() async{
     await Firebase.initializeApp(
 options: DefaultFirebaseOptions.currentPlatform,
       );
-  
   
   runApp(const MyApp());
 }
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: EnterCarDetailsPage(),
+      home: LogInPage(),
     );
   }
 }

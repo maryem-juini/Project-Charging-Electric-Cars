@@ -44,22 +44,22 @@ class _ProfilePageState extends State<ProfilePage> {
                 leading: Image.asset(
                   'assets/profile.png',
                   width: 50,
-                  height:50,
+                  height: 50,
                 ),
                 title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'John Doe',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-                    ),
-                    Text(
-                      '+216 27 456 320 ',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 12,
-              )),]),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'John Doe',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 17),
+                      ),
+                      Text('+216 27 456 320 ',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 12,
+                          )),
+                    ]),
                 trailing: InkWell(
                   child:
                       Icon(Icons.arrow_forward_ios, color: Color(0xFF06094C)),
@@ -70,7 +70,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: size.height * 0.01,
               ),
               Divider(
-                color:Color(0xFFFBAA1B),
+                color: Color(0xFFFBAA1B),
                 thickness: 1,
               ),
               SizedBox(
@@ -125,8 +125,8 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               Expanded(child: Container()),
               Container(
-                width: size.width*0.3,
-                height: 50, 
+                width: size.width * 0.3,
+                height: 50,
                 child: ElevatedButton(
                   onPressed: () {
                     print('User logged out.');
@@ -134,13 +134,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Text(
                     "Log Out",
                     style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold
-                    ),
+                        color: Colors.white,
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold),
                   ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red, // Set the button color to red
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        Colors.blue), // Set the button color to blue
                   ),
                 ),
               ),
