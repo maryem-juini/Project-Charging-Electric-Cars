@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:project/Screens/EnterCarDetails.dart';
 import 'package:project/Screens/OtpLogic.dart';
 import 'package:project/Screens/SelectCar.dart';
+import 'package:project/Screens/bookingSuccess.dart';
 import 'package:project/Screens/database.dart';
+import 'package:project/Screens/enablelocation.dart';
+import 'package:project/Screens/forgetPassword.dart';
+import 'package:project/Screens/newpassword.dart';
 import 'package:project/Screens/signup.dart';
 import 'package:project/firebase_options.dart';
 
@@ -15,6 +19,6 @@ options: DefaultFirebaseOptions.currentPlatform,
       );
   
   
-  runApp(Select());
+  runApp(MyApp());
 }
 

@@ -166,8 +166,8 @@ class _SelectCarState extends State<SelectCar> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => EnterCarDetails(
-                                selectedCar: _selectedCar!,
+                              builder: (context) => EnterCarDetailsPage(
+                              
                               ),
                             ),
                           );

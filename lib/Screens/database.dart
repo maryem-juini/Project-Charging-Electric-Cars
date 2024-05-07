@@ -643,32 +643,9 @@ class MyApp extends StatelessWidget {
     ];
      CollectionReference Cars = FirebaseFirestore.instance.collection('Cars');
 
-jsonData.forEach((car) async {
-    // Save the car data to Firestore
-    DocumentReference carDoc = await Cars.add({
-      'model': car['model'],
-      'make': car['make'],
-      'max_power_kw': car['max_power_kw'],
-    });
-
-    // Determine the types of chargers based on car data
-    List<String> chargers = [];
-    double maxPower = car['max_power_kw'];
-    if (maxPower >= 350) {
-      chargers.add('Supercharger V3');
+    for (var data in jsonData) {
+      await Cars.add(data);
     }
-    if (maxPower >= 150) {
-      chargers.add('DC Fast Charger');
-    }
-    if (maxPower >= 50) {
-      chargers.add('Level 2 Charger');
-    }
-
-    // Save the charger types for the car
-    await carDoc.update({'chargers': chargers});
-
-    print('Car data saved to Firestore: ${car['make']} ${car['model']}');
-  });
 
   print('All data saved to Firestore');
 }
