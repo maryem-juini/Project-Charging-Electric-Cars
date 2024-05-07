@@ -44,6 +44,8 @@ dependencies:
   flutter_intl_phone_field: ^0.0.4
   animated_rating_stars: ^1.0.1
   flutter_verification_code_field: ^1.0.4
+  cloud_firestore: ^4.15.8
+  connectivity: ^3.0.6
   #firebase_core: ^2.24.2
 
 dev_dependencies:

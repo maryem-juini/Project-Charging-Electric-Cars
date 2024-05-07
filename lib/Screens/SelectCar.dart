@@ -1,12 +1,75 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:project/Screens/EnterCarDetails.dart';
 
-class RadioButtonContainer extends StatefulWidget {
+
+
+
+class Select extends StatelessWidget {
   @override
-  _RadioButtonContainerState createState() => _RadioButtonContainerState();
+  Widget build(BuildContext context) {
+    return Directionality(
+      textDirection: TextDirection.ltr, 
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: SelectCar(),
+      ),
+    );
+  }
 }
 
-class _RadioButtonContainerState extends State<RadioButtonContainer> {
-  int? _selectedValue;
+
+
+class SelectCar extends StatefulWidget {
+  @override
+  _SelectCarState createState() => _SelectCarState();
+}
+
+class _SelectCarState extends State<SelectCar> {
+  String? _selectedCar;
+
+  late List<Map<String, dynamic>> carDataList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchCarData();
+  }
+
+  void fetchCarData() async {
+    try {
+      QuerySnapshot querySnapshot =
+          await FirebaseFirestore.instance.collection('Cars').get();
+
+      if (querySnapshot != null) {
+        setState(() {
+          carDataList.clear();
+
+          querySnapshot.docs.forEach((doc) {
+            var data = doc.data() as Map<String, dynamic>?;
+            if (data != null &&
+                data.containsKey('make') &&
+                data.containsKey('model')) {
+              bool exists = carDataList.any((element) =>
+                  element['make'] == data['make'] &&
+                  element['model'] == data['model']);
+
+              if (!exists) {
+                carDataList.add({
+                  'make': data['make'],
+                  'model': data['model'],
+                });
+              }
+            }
+          });
+        });
+      } else {
+        print('Query snapshot is null');
+      }
+    } catch (error) {
+      print("Error fetching data: $error");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +96,8 @@ class _RadioButtonContainerState extends State<RadioButtonContainer> {
               Container(
                 margin: EdgeInsets.only(top: size.height * 0.03),
                 child: Column(
-                  children: List.generate(8, (index) {
+                  children: List.generate(carDataList.length, (index) {
+                    final car = carDataList[index];
                     return Container(
                       padding: EdgeInsets.all(10),
                       margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -63,26 +127,25 @@ class _RadioButtonContainerState extends State<RadioButtonContainer> {
                                   ),
                                 ),
                                 Text(
-                                  'Container ${index + 1}',
+                                  '${car["make"]} ${car["model"]}',
                                   style: TextStyle(
-                                      fontSize: size.width * 0.04,
-                                      fontWeight: FontWeight.bold), // Text color
+                                    fontSize: size.width * 0.04,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ],
                             ),
                           ),
-                          Transform.scale(
-                            scale: 1,
-                            child: Radio<int>(
-                              value: index, // You can assign any value here
-                              groupValue: _selectedValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  _selectedValue = value;
-                                });
-                              },
-                              activeColor: Color(0xFFFBAA1B),
-                            ),
+                          Radio<String>(
+                            value: '${car["make"]} ${car["model"]}',
+                            groupValue: _selectedCar,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedCar = value;
+                                print(_selectedCar);
+                              });
+                            },
+                            activeColor: Color(0xFFFBAA1B),
                           ),
                         ],
                       ),
@@ -91,20 +154,36 @@ class _RadioButtonContainerState extends State<RadioButtonContainer> {
                 ),
               ),
               Container(
-                                margin: EdgeInsets.only(top: size.height * .05),
-
+                margin: EdgeInsets.only(top: size.height * .05),
                 child: Container(
-                  width: size.width*0.3,
-                  height: size.height*0.07,
+                  width: size.width * 0.3,
+                  height: size.height * 0.07,
                   child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Next",
-                      style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: size.height*0.03,
-                      )
-                    ),
+                  
+                      onPressed:
+                      () {
+                        if (_selectedCar != null) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EnterCarDetailsPage(
+                              
+                              ),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Please select a car.'),
+                            ),
+                          );
+                        }
+                      },
+                    
+                    child: Text("Next",
+                        style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: size.height * 0.03)),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.resolveWith<Color>(
                         (Set<MaterialState> states) {
@@ -124,8 +203,7 @@ class _RadioButtonContainerState extends State<RadioButtonContainer> {
                       ),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                              5.0), // Adjust the radius as needed
+                          borderRadius: BorderRadius.circular(5.0),
                         ),
                       ),
                     ),
@@ -140,5 +218,3 @@ class _RadioButtonContainerState extends State<RadioButtonContainer> {
     );
   }
 }
-
-

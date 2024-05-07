@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_intl_phone_field/flutter_intl_phone_field.dart';
 import 'package:flutter_intl_phone_field/phone_number.dart';
-import 'package:project/Screens/LogIn.dart';
+import 'package:project/Screens/login.dart';
 import 'package:project/Screens/ReadyCharge.dart';
 import 'package:project/Screens/OTP.dart'; 
 
