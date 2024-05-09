@@ -4,6 +4,7 @@ import 'package:project/Screens/CompleteProfile.dart';
 import 'package:project/Screens/LogIn.dart';
 import 'package:project/DataBase/StationDataBase.dart';
 import 'package:project/Screens/SetPassword.dart';
+import 'package:project/Screens/bookPage.dart';
 import 'package:project/Screens/enablelocation.dart';
 import 'package:project/DataBase/firebase_options.dart';
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CompleteProfilePage(),
+      home: BookingCalendarDemoApp(),
     );
   }
 }
