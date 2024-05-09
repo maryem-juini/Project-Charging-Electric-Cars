@@ -93,7 +93,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
               leading: InkWell(
                 child: Icon(Icons.arrow_back_ios, color: Color(0xFF06094C)),
                 onTap: () {
-                  Navigator.pop(context)
+                  Navigator.pop(context) ; 
                 },
               ),
             ),
