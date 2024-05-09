@@ -2,9 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:project/Screens/CompleteProfile.dart';
 import 'package:project/Screens/LogIn.dart';
-import 'package:project/Screens/bookPage.dart';
+import 'package:project/DataBase/StationDataBase.dart';
+import 'package:project/Screens/SetPassword.dart';
 import 'package:project/Screens/enablelocation.dart';
-import 'package:project/firebase_options.dart';
+import 'package:project/DataBase/firebase_options.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized(); 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: BookingCalendarDemoApp(),
+      home: CompleteProfilePage(),
     );
   }
 }
