@@ -5,6 +5,7 @@ import 'package:project/Screens/ProfilePage.dart';
 import 'package:project/Screens/SearchPage.dart';
 
 class BottomPage extends StatelessWidget {
+  
   final int selectedIndex;
 
   const BottomPage({Key? key, required this.selectedIndex}) : super(key: key);

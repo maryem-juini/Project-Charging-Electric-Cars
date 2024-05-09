@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_intl_phone_field/phone_number.dart';
 import 'package:flutter_verification_code_field/flutter_verification_code_field.dart';
 import 'package:project/Screens/ReadyCharge.dart';
+import 'package:project/Screens/SetPassword.dart';
 
 class OTP extends StatefulWidget {
   String verificationId;
@@ -55,7 +56,7 @@ class _OTPState extends State<OTP> {
         // Navigate to the next screen
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ReadyCharge()),
+          MaterialPageRoute(builder: (context) =>SetPasswordPage()),
         );
       } else {
         // Show error message if verification code is empty

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
 
 class CompleteProfilePage extends StatefulWidget {
   const CompleteProfilePage({super.key});
@@ -7,6 +10,36 @@ class CompleteProfilePage extends StatefulWidget {
 }
 
 class _CompleteProfilePageState extends State<CompleteProfilePage> {
+  XFile? _image;
+  String? _downloadUrl;
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> pickImage() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        _image = image;
+      });
+      uploadImage(image);
+    }
+  }
+
+  Future<void> uploadImage(XFile image) async {
+    try {
+      FirebaseStorage storage = FirebaseStorage.instance;
+      Reference ref = storage.ref().child("profile_pictures/${image.name}");
+      UploadTask uploadTask = ref.putFile(File(image.path));
+
+      await uploadTask.whenComplete(() async {
+        final String downloadUrl = await ref.getDownloadURL();
+        setState(() {
+          _downloadUrl = downloadUrl;
+        });
+      });
+    } catch (e) {
+      print('Failed to upload image: $e');
+    }
+  }
   FocusNode _focusNode1 = FocusNode();
   bool _isFocused1 = false;
   FocusNode _focusNode2 = FocusNode();
@@ -54,13 +87,13 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF06094C),
-                    fontSize: 25),
+                    fontSize: 25)
               ),
               backgroundColor: Colors.white,
               leading: InkWell(
                 child: Icon(Icons.arrow_back_ios, color: Color(0xFF06094C)),
                 onTap: () {
-                  Navigator.pop(context);
+                  Navigator.pop(context)
                 },
               ),
             ),
@@ -88,11 +121,11 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                         child: Container(
                           height: 10,
                           width: 10,
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: InkWell(child: Icon(Icons.edit_square)),
-                            iconSize: 30,
-                            color: Color(0xFFFBAA1B),
+                          child:InkWell(
+                            onTap: () {
+                              pickImage();
+                            },
+                            child: Icon(Icons.edit_square, color: Color(0xFFFBAA1B), size: 30,),
                           ),
                         ),
                       ),
