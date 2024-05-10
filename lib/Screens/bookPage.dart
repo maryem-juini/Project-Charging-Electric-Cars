@@ -4,15 +4,14 @@ import 'package:booking_calendar/booking_calendar.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
+import 'package:project/Screens/HomePage.dart';
 
-void main() {
-  Intl.defaultLocale = 'en_US';
-  initializeDateFormatting('en_US')
-      .then((_) => runApp(BookingCalendarDemoApp()));
-}
+
 
 class BookingCalendarDemoApp extends StatefulWidget {
-  const BookingCalendarDemoApp({Key? key}) : super(key: key);
+  final String stationId;
+
+  const BookingCalendarDemoApp({Key? key, required this.stationId}) : super(key: key);
 
   @override
   State<BookingCalendarDemoApp> createState() => _BookingCalendarDemoAppState();
@@ -38,6 +37,7 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
       {required DateTime end, required DateTime start}) {
     return FirebaseFirestore.instance
         .collection('appointments')
+        .where('station_ID', isEqualTo: widget.stationId) // Filter by stationId
         .snapshots()
         .map((snapshot) {
       return snapshot.docs.map((doc) {
@@ -54,6 +54,8 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
     await FirebaseFirestore.instance.collection('appointments').add({
       'start': newBooking.bookingStart,
       'end': newBooking.bookingEnd,
+      
+      
     });
     converted.add(DateTimeRange(
         start: newBooking.bookingStart, end: newBooking.bookingEnd));
@@ -73,13 +75,31 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+       debugShowCheckedModeBanner: false,
       title: 'Booking Calendar Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Booking Calendar Demo'),
+       appBar: AppBar(
+          title: Text(
+            'Book an Appointment ',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF06094C),
+            ),
+          ),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomePage()
+          ),
+        );
+            },
+          ),
         ),
         body: BookingCalendar(
           bookingService: mockBookingService,

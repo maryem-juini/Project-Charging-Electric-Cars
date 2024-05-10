@@ -1,16 +1,76 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_rating_stars/animated_rating_stars.dart';
 import 'package:project/Screens/Bottom.dart';
 import 'package:project/Screens/Header.dart';
+import 'package:project/Screens/MyBooking.dart';
+import 'package:project/Screens/bookPage.dart';
 
 class Station extends StatefulWidget {
-  const Station({super.key});
+  final String stationName;
+  final String distance;
+
+  const Station({
+    required this.stationName,
+    required this.distance,
+    Key? key,
+  }) : super(key: key);
+  
 
   @override
   State<Station> createState() => _StationState();
 }
 
 class _StationState extends State<Station> {
+  late String _stationId;
+
+  @override
+  void initState() {
+    super.initState();
+    // Call the method to search for the station ID when the widget initializes
+    searchStationId(widget.stationName);
+  }
+  
+  Future<void> searchStationId(String stationName) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> snapshot =
+          await FirebaseFirestore.instance.collection('Stations')
+          .where('station_name', isEqualTo: stationName)
+          .limit(1)
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        // If the station is found, retrieve its ID
+        setState(() {
+          _stationId = snapshot.docs.first.id;
+        });
+      } else {
+        // If the station is not found, set the ID to an empty string
+        setState(() {
+          _stationId = '';
+        });
+      }
+    } catch (e) {
+      // Handle errors if any
+      print('Error retrieving station ID: $e');
+    }
+    print(_stationId);
+  }
+  String estimateTravelTime(double distance, double averageSpeed) {
+    // Convert distance to kilometers if not already
+    // Assume averageSpeed is in kilometers per hour
+    double distanceInKm =
+        distance; // Assuming distance is already in kilometers
+
+    // Calculate travel time
+    double travelTimeInHours = distanceInKm / averageSpeed;
+
+    // Convert travel time to minutes for better readability
+    int travelTimeInMinutes = (travelTimeInHours * 60).round();
+
+    return '${travelTimeInMinutes} minutes';
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -36,17 +96,17 @@ class _StationState extends State<Station> {
                   child: Column(
                     children: [
                       Text(
-                        "Taffela Sousse",
+                        widget.stationName,
                         style: TextStyle(
                           fontSize: size.width * 0.04,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text("Avenu eeeee",
-                          style: TextStyle(
-                            fontSize: size.width * 0.02,
-                            color: Color.fromARGB(255, 146, 149, 154),
-                          )),
+                      // Text("Avenu eeeee",
+                      //     style: TextStyle(
+                      //       fontSize: size.width * 0.02,
+                      //       color: Color.fromARGB(255, 146, 149, 154),
+                      //     )),
                     ],
                   ),
                 ),
@@ -110,11 +170,20 @@ class _StationState extends State<Station> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: size.height * 0.02),
-                        child: Text("100 Km ",
-                            style: TextStyle(
-                              fontSize: size.width * 0.02,
-                              color: Color.fromARGB(255, 146, 149, 154),
-                            )),
+                        child: Row(
+                          children: [
+                            Text(widget.distance,
+                                style: TextStyle(
+                                  fontSize: size.width * 0.02,
+                                  color: Color.fromARGB(255, 146, 149, 154),
+                                )),
+                            Text("KM",
+                                style: TextStyle(
+                                  fontSize: size.width * 0.02,
+                                  color: Color.fromARGB(255, 146, 149, 154),
+                                )),
+                          ],
+                        ),
                       ),
                       Container(
                         margin: EdgeInsets.only(
@@ -126,11 +195,16 @@ class _StationState extends State<Station> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: size.height * 0.02),
-                        child: Text("1 hour ",
-                            style: TextStyle(
-                              fontSize: size.width * 0.02,
-                              color: Color.fromARGB(255, 146, 149, 154),
-                            )),
+                        child: Text(
+                          estimateTravelTime(
+                              double.parse(
+                                  widget.distance.replaceAll(' KM', '')),
+                              60),
+                          style: TextStyle(
+                            fontSize: size.width * 0.02,
+                            color: Color.fromARGB(255, 146, 149, 154),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -152,7 +226,12 @@ class _StationState extends State<Station> {
                         "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.")),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => BookingCalendarDemoApp(stationId: _stationId)),
+                      );
+                    },
                     child: Text(
                       "Book",
                     ),
@@ -183,7 +262,7 @@ class _StationState extends State<Station> {
                   ),
                 ),
                 SizedBox(
-                  height: size.height * 0.08,   
+                  height: size.height * 0.08,
                 )
               ]),
         ),
