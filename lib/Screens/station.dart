@@ -15,7 +15,6 @@ class Station extends StatefulWidget {
     required this.distance,
     Key? key,
   }) : super(key: key);
-  
 
   @override
   State<Station> createState() => _StationState();
@@ -30,11 +29,12 @@ class _StationState extends State<Station> {
     // Call the method to search for the station ID when the widget initializes
     searchStationId(widget.stationName);
   }
-  
+
   Future<void> searchStationId(String stationName) async {
     try {
-      QuerySnapshot<Map<String, dynamic>> snapshot =
-          await FirebaseFirestore.instance.collection('Stations')
+      QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+          .instance
+          .collection('Stations')
           .where('station_name', isEqualTo: stationName)
           .limit(1)
           .get();
@@ -56,6 +56,7 @@ class _StationState extends State<Station> {
     }
     print(_stationId);
   }
+
   String estimateTravelTime(double distance, double averageSpeed) {
     // Convert distance to kilometers if not already
     // Assume averageSpeed is in kilometers per hour
@@ -229,7 +230,9 @@ class _StationState extends State<Station> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => BookingCalendarDemoApp(stationId: _stationId)),
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                BookingCalendarDemoApp(stationId: _stationId)),
                       );
                     },
                     child: Text(
@@ -255,8 +258,13 @@ class _StationState extends State<Station> {
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
-                              5.0), // Adjust the radius as needed
+                              30.0), // Adjust the radius as needed
                         ),
+                      ),
+                      minimumSize: MaterialStateProperty.resolveWith<Size>(
+                        (Set<MaterialState> states) {
+                          return Size(size.width * 0.5, size.height * 0.07);
+                        },
                       ),
                     ),
                   ),

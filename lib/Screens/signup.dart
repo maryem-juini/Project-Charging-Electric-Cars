@@ -27,14 +27,12 @@ class _SignupState extends State<Signup> {
     );
   String _verificationId = '';
 
-  // Method to send verification code
   Future<void> sendVerificationCode() async {
     try {
       await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: _phoneNumber.completeNumber,
         verificationCompleted: (PhoneAuthCredential credential) async {
           await FirebaseAuth.instance.signInWithCredential(credential);
-          // Navigate to the next screen or perform other actions.
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => ReadyCharge()),

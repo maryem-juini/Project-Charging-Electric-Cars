@@ -21,6 +21,38 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    FocusNode _focusNode1 = FocusNode();
+    bool _isFocused1 = false;
+    FocusNode _focusNode2 = FocusNode();
+    bool _isFocused2 = false;
+    FocusNode _focusNode3 = FocusNode();
+    bool _isFocused3 = false;
+    FocusNode _focusNode4 = FocusNode();
+    bool _isFocused4 = false;
+    bool _isChecked = false;
+    void initState() {
+      super.initState();
+      _focusNode1.addListener(() {
+        setState(() {
+          _isFocused1 = _focusNode1.hasFocus;
+        });
+      });
+      _focusNode2.addListener(() {
+        setState(() {
+          _isFocused2 = _focusNode2.hasFocus;
+        });
+      });
+      _focusNode3.addListener(() {
+        setState(() {
+          _isFocused1 = _focusNode1.hasFocus;
+        });
+      });
+      _focusNode4.addListener(() {
+        setState(() {
+          _isFocused1 = _focusNode1.hasFocus;
+        });
+      });
+    }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -55,32 +87,72 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
               ),
               TextField(
                 controller: _fullNameController,
-                decoration: InputDecoration(
-                  labelText: 'Full Name',
-                ),
+                 focusNode: _focusNode4,
+                        cursorColor: Color(0xFFFBAA1B),
+                        decoration: InputDecoration(
+                          labelText: 'Full Name',
+                          labelStyle: TextStyle(
+                            color:
+                                _isFocused4 ? Color(0xFFFBAA1B) : Colors.grey,
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFFFBAA1B)),
+                          ),
+                        ),
+
               ),
               SizedBox(height: 20),
               TextField(
                 controller: _emailController,
-                decoration: InputDecoration(
-                  labelText: 'Mail Address',
-                ),
+                 focusNode: _focusNode3,
+                        cursorColor: Color(0xFFFBAA1B),
+                        decoration: InputDecoration(
+                          labelText: 'Mail Address',
+                          labelStyle: TextStyle(
+                            color:
+                                _isFocused3 ? Color(0xFFFBAA1B) : Colors.grey,
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFFFBAA1B)),
+                          ),
+                        ),
+
               ),
               SizedBox(height: 20),
               TextField(
                 obscureText: true,
                 controller: _passwordController,
-                decoration: InputDecoration(
-                  labelText: 'Your Password',
-                ),
+                 focusNode: _focusNode2,
+                        cursorColor: Color(0xFFFBAA1B),
+                        decoration: InputDecoration(
+                          labelText: 'Your Password',
+                          labelStyle: TextStyle(
+                            color:
+                                _isFocused2 ? Color(0xFFFBAA1B) : Colors.grey,
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFFFBAA1B)),
+                          ),
+                        ),
+
               ),
               SizedBox(height: 20),
               TextField(
                 obscureText: true,
                 controller: _confirmPasswordController,
-                decoration: InputDecoration(
-                  labelText: 'Confirm Password',
-                ),
+                 focusNode: _focusNode1,
+                        cursorColor: Color(0xFFFBAA1B),
+                        decoration: InputDecoration(
+                          labelText: 'Confirm Password',
+                          labelStyle: TextStyle(
+                            color:
+                                _isFocused1 ? Color(0xFFFBAA1B) : Colors.grey,
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xFFFBAA1B)),
+                          ),
+                        ),
+
               ),
               SizedBox(height: size.height * .1),
               ElevatedButton(
@@ -106,22 +178,22 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                         );
                       },
                     );
-                    return; // Exit function early
+                    return;
                   }
 
-                  // Passwords match, proceed with sign-up
                   try {
                     UserCredential userCredential = await FirebaseAuth.instance
                         .createUserWithEmailAndPassword(
                       email: _emailController.text,
                       password: _passwordController.text,
                     );
-                    // Get the user ID from the provider
                     String? userId =
                         Provider.of<UserProvider>(context, listen: false)
                             .userId;
+                    String uid = userCredential.user!.uid;
+                    Provider.of<UserProvider>(context, listen: false)
+                        .setUserId(uid);
 
-                    // Update the user profile information in Firestore
                     try {
                       await FirebaseFirestore.instance
                           .collection('Users')
@@ -130,11 +202,8 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                         'Full_Name': _fullNameController.text,
                         'Mail_Address': _emailController.text,
                         'Password': _passwordController.text,
-                        // Add other profile information here if needed
+                        'Id_User': uid,
                       });
-
-                      // Successfully updated profile information
-                      // You can navigate to the next screen or perform any other actions needed.
                     } catch (e) {
                       // Error occurred while updating profile information, show error message
                       showDialog(
@@ -156,10 +225,7 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                       );
                     }
 
-                    // Successfully signed up, you can navigate to the next screen
-                    // or perform any other actions needed after sign-up.
                   } catch (e) {
-                    // Error occurred during sign-up, show error message
                     showDialog(
                       context: context,
                       builder: (context) {

@@ -45,6 +45,7 @@ class _OTPState extends State<OTP> {
     }
   }
 
+
   Future<void> verifyCode() async {
     try {
 
@@ -61,7 +62,6 @@ class _OTPState extends State<OTP> {
         final FirebaseFirestore _firestore = FirebaseFirestore.instance;
         await _firestore.collection('Users').doc(uid).set({
           'Phone_Number': widget.phoneNumber.completeNumber,
-          'Id_User': uid,
         });
 
         // Navigate to the next screen
@@ -174,9 +174,15 @@ class _OTPState extends State<OTP> {
                     ),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0),
+                        borderRadius: BorderRadius.circular(30.0),
+                        
                       ),
                     ),
+                    minimumSize: MaterialStateProperty.resolveWith<Size>(
+                    (Set<MaterialState> states) {
+                      return Size(size.width * 0.5, size.height * 0.07);
+                    },
+                  ),
                   ),
                 ),
               ),

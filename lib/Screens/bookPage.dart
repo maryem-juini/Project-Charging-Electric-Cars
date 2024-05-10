@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:booking_calendar/booking_calendar.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'dart:async';
-import 'package:intl/intl.dart';
 import 'package:project/Screens/HomePage.dart';
 
 

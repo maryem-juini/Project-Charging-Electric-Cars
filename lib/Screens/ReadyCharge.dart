@@ -57,11 +57,6 @@ class _ReadyChargeState extends State<ReadyCharge> {
                     padding: EdgeInsets.only(top: size.height * .1),
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CompleteProfilePage()),
-                        );
                       },
                       child: Text("Next",
                           style: TextStyle(
