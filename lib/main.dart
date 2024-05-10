@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:project/Provider/UserProvider.dart';
+import 'package:project/Screens/CompleteProfile.dart';
 import 'package:project/Screens/LogIn.dart';
+import 'package:project/Screens/bookPage.dart';
+import 'package:project/Screens/enablelocation.dart';
 import 'package:provider/provider.dart';
 import 'package:project/Screens/SignUp.dart';
 import 'package:project/DataBase/firebase_options.dart';
@@ -25,7 +28,7 @@ class MyApp extends StatelessWidget {
       create: (context) => UserProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: LogInPage(),
+        home: enableLocation(),
       ),
     );
   }
