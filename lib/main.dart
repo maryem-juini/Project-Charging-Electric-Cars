@@ -1,11 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:project/Screens/CompleteProfile.dart';
-import 'package:project/Screens/LogIn.dart';
-import 'package:project/DataBase/StationDataBase.dart';
-import 'package:project/Screens/SetPassword.dart';
-import 'package:project/Screens/bookPage.dart';
-import 'package:project/Screens/enablelocation.dart';
+import 'package:project/Provider/UserProvider.dart';
+import 'package:provider/provider.dart';
+import 'package:project/Screens/SignUp.dart';
 import 'package:project/DataBase/firebase_options.dart';
 
 void main() async{
@@ -23,9 +20,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: enableLocation()
+    return ChangeNotifierProvider(
+      create: (context) => UserProvider(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Signup(),
+      ),
     );
   }
 }
