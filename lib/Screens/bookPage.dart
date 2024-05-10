@@ -1,17 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:booking_calendar/booking_calendar.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
+import 'package:project/Provider/UserProvider.dart';
 import 'package:project/Screens/HomePage.dart';
-
-
+import 'package:provider/provider.dart';
 
 class BookingCalendarDemoApp extends StatefulWidget {
   final String stationId;
 
-  const BookingCalendarDemoApp({Key? key, required this.stationId}) : super(key: key);
+
+  const BookingCalendarDemoApp({Key? key, required this.stationId})
+      : super(key: key);
 
   @override
   State<BookingCalendarDemoApp> createState() => _BookingCalendarDemoAppState();
@@ -20,12 +23,16 @@ class BookingCalendarDemoApp extends StatefulWidget {
 class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
   final now = DateTime.now();
   late BookingService mockBookingService;
+   late String? userId;
 
   @override
   void initState() {
     super.initState();
-    // DateTime.now().startOfDay
-    // DateTime.now().endOfDay
+     getCurrentUserId().then((id) {
+      setState(() {
+        userId = id;
+      });
+    });
     mockBookingService = BookingService(
         serviceName: 'Booking Service',
         serviceDuration: 30,
@@ -33,11 +40,19 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
         bookingStart: DateTime(now.year, now.month, now.day, 8, 0));
   }
 
+  Future<String?> getCurrentUserId() async {
+  // Get the current user from FirebaseAuth
+  User? user = FirebaseAuth.instance.currentUser;
+  // Return the user's ID or null if user is not logged in
+  return user?.uid;
+}
+
+
   Stream<List<DateTimeRange>> getBookingStreamMock(
       {required DateTime end, required DateTime start}) {
     return FirebaseFirestore.instance
         .collection('appointments')
-        .where('station_ID', isEqualTo: widget.stationId) // Filter by stationId
+        .where('serviceId', isEqualTo: widget.stationId) // Filter by stationId
         .snapshots()
         .map((snapshot) {
       return snapshot.docs.map((doc) {
@@ -50,17 +65,36 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
     });
   }
 
-  Future<void> uploadBookingMock({required BookingService newBooking}) async {
-    await FirebaseFirestore.instance.collection('appointments').add({
-      'start': newBooking.bookingStart,
-      'end': newBooking.bookingEnd,
-      
-      
-    });
-    converted.add(DateTimeRange(
-        start: newBooking.bookingStart, end: newBooking.bookingEnd));
-    print('${newBooking.toJson()} has been uploaded');
+Future<void> uploadBookingMock({required BookingService newBooking}) async {
+  try {
+    // Get the current user ID
+    String? userId = await getCurrentUserId();
+    print(widget.stationId);
+
+    // Check if the user ID is available
+    if (userId != null) {
+      // Add the appointment along with the user ID to the Firestore collection
+      await FirebaseFirestore.instance.collection('appointments').add({
+        'start': newBooking.bookingStart,
+        'end': newBooking.bookingEnd,
+        'userId': userId,
+        'serviceId':widget.stationId, // Include the user ID in the appointment data
+      });
+
+      // Add the appointment to the local list
+      converted.add(DateTimeRange(
+          start: newBooking.bookingStart, end: newBooking.bookingEnd));
+
+      print('${newBooking.toJson()} has been uploaded');
+    } else {
+      // Handle the case where the user ID is not available
+      print('User ID not available');
+    }
+  } catch (e) {
+    // Handle any errors
+    print('Error uploading booking: $e');
   }
+}
 
   List<DateTimeRange> converted = [];
   List<DateTimeRange> convertStreamResultMock({required dynamic streamResult}) {
@@ -75,13 +109,13 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-       debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
       title: 'Booking Calendar Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-       appBar: AppBar(
+        appBar: AppBar(
           title: Text(
             'Book an Appointment ',
             style: TextStyle(
@@ -93,11 +127,9 @@ class _BookingCalendarDemoAppState extends State<BookingCalendarDemoApp> {
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {
               Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => HomePage()
-          ),
-        );
+                context,
+                MaterialPageRoute(builder: (context) => HomePage()),
+              );
             },
           ),
         ),
