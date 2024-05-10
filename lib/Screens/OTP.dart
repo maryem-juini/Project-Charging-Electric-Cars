@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_intl_phone_field/phone_number.dart';
 import 'package:flutter_verification_code_field/flutter_verification_code_field.dart';
-import 'package:project/Screens/ReadyCharge.dart';
-import 'package:project/Screens/SetPassword.dart';
+import 'package:project/Provider/UserProvider.dart';
+import 'package:project/Screens/CompleteProfile.dart';
+import 'package:provider/provider.dart';
 
 class OTP extends StatefulWidget {
   String verificationId;
@@ -52,11 +54,21 @@ class _OTPState extends State<OTP> {
           verificationId: widget.verificationId,
           smsCode: _verificationCode,
         );
-        await FirebaseAuth.instance.signInWithCredential(credential);
+        UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+        // Get the UID of the authenticated user
+        String uid = userCredential.user!.uid;
+        Provider.of<UserProvider>(context, listen: false).setUserId(uid);
+
+        final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+        await _firestore.collection('Users').doc(uid).set({
+          'Phone_Number': widget.phoneNumber.completeNumber,
+          'Id_User': uid,
+        });
+
         // Navigate to the next screen
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) =>SetPasswordPage()),
+          MaterialPageRoute(builder: (context) =>CompleteProfilePage()),
         );
       } else {
         // Show error message if verification code is empty
