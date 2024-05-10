@@ -45,17 +45,16 @@ class _OTPState extends State<OTP> {
     }
   }
 
-  // Method to verify entered code
   Future<void> verifyCode() async {
     try {
-      // Check if verification code is not empty
+
       if (_verificationCode.isNotEmpty) {
         PhoneAuthCredential credential = PhoneAuthProvider.credential(
           verificationId: widget.verificationId,
           smsCode: _verificationCode,
         );
         UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-        // Get the UID of the authenticated user
+
         String uid = userCredential.user!.uid;
         Provider.of<UserProvider>(context, listen: false).setUserId(uid);
 

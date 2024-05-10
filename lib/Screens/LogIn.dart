@@ -1,5 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project/Provider/UserProvider.dart';
+import 'package:project/Screens/HomePage.dart';
 import 'package:project/Screens/SignUp.dart';
+import 'package:provider/provider.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({super.key});
@@ -28,6 +33,41 @@ class _LogInPageState extends State<LogInPage> {
     });
   }
 
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  Future<void> logIn() async {
+    String email = _emailController.text;
+    print(email);
+    String password = _passwordController.text;
+
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('Users')
+          .where('Mail_Address', isEqualTo: email)
+          .limit(1)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        DocumentSnapshot documentSnapshot = querySnapshot.docs.first;
+        String storedPassword = documentSnapshot['Password'];
+        UserCredential userCredential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: email, password: password);
+
+        String uid = documentSnapshot['Id_User'];
+        Provider.of<UserProvider>(context, listen: false).setUserId(uid);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+      } else {
+        print('No user found with the provided email');
+      }
+    } catch (e) {
+      print('Failed to log in: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -43,10 +83,11 @@ class _LogInPageState extends State<LogInPage> {
               height: size.height * .35,
             ),
             TextField(
+              controller: _emailController,
               focusNode: _focusNode1,
               cursorColor: Color(0xFFFBAA1B),
               decoration: InputDecoration(
-                labelText: 'Phone Number',
+                labelText: 'Mail Adress',
                 labelStyle: TextStyle(
                   color: _isFocused1
                       ? Color(0xFFFBAA1B)
@@ -61,6 +102,7 @@ class _LogInPageState extends State<LogInPage> {
               height: 20,
             ),
             TextField(
+              controller: _passwordController,
               obscureText: true,
               focusNode: _focusNode2,
               cursorColor: Color(0xFFFBAA1B),
@@ -102,10 +144,7 @@ class _LogInPageState extends State<LogInPage> {
               ),
               Text(
                 "Remember Me",
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold
-                ),
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
             ]),
             SizedBox(
@@ -115,7 +154,7 @@ class _LogInPageState extends State<LogInPage> {
               width: size.width * .35,
               height: size.height * .06,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: logIn,
                 child: Text("Log In"),
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.resolveWith<Color>(
