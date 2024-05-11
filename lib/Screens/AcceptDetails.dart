@@ -28,7 +28,9 @@ class _AcceptDetailsState extends State<AcceptDetails> {
           leading: InkWell(
                   child:
                       Icon(Icons.arrow_back_ios, color: Color(0xFF06094C)),
-                  onTap: () {},
+                  onTap: () {
+                    
+                  },
                 ),),
         body: Center(
           child: Column(

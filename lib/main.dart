@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:project/Provider/UserProvider.dart';
 import 'package:project/Screens/CompleteProfile.dart';
 import 'package:project/Screens/LogIn.dart';
+import 'package:project/Screens/SearchPage.dart';
 import 'package:project/Screens/bookPage.dart';
 import 'package:project/Screens/enablelocation.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       create: (context) => UserProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: enableLocation(),
+        home: Signup(),
       ),
     );
   }

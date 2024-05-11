@@ -38,7 +38,7 @@ class _SearchPageState extends State<SearchPage> {
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
                         color: Color(0xffFBAA1B),
-                      ), // Set the border color when focused
+                      ),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),

@@ -6,6 +6,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
 import 'package:project/Provider/UserProvider.dart';
+import 'package:project/Screens/Bottom.dart';
 import 'package:project/Screens/HomePage.dart';
 import 'package:provider/provider.dart';
 
@@ -133,6 +134,7 @@ Future<void> uploadBookingMock({required BookingService newBooking}) async {
             },
           ),
         ),
+        bottomNavigationBar: BottomPage(selectedIndex: 0),
         body: BookingCalendar(
           bookingService: mockBookingService,
           convertStreamResultToDateTimeRanges: convertStreamResultMock,
