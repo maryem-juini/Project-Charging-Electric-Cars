@@ -29,7 +29,11 @@ class _MyVehiculeState extends State<MyVehicule> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(Icons.arrow_back, color: Color(0xFF06094C), size: 30),
+                    InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                      child: Icon(Icons.arrow_back, color: Color(0xFF06094C), size: 30)),
                     Text('My Vehicule',
                         style: TextStyle(
                           fontSize: 25,

@@ -4,6 +4,7 @@ import 'package:project/Provider/UserProvider.dart';
 import 'package:project/Screens/CompleteProfile.dart';
 import 'package:project/Screens/EnterCarDetails.dart';
 import 'package:project/Screens/LogIn.dart';
+import 'package:project/Screens/ProfilePage.dart';
 import 'package:project/Screens/ReadyCharge.dart';
 import 'package:project/Screens/SelectCar.dart';
 import 'package:project/Screens/SplashScreen.dart';
@@ -32,10 +33,7 @@ class MyApp extends StatelessWidget {
       create: (context) => UserProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        // home:CompleteProfilePage(),
-       // home:ReadyCharge(),
-       home: SplashScreen(),
-      // home:Signup(),
+       home: ProfilePage(),
       ),
     );
   }

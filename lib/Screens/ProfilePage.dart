@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/Screens/Bottom.dart';
+import 'package:project/Screens/MyVehicule.dart';
 import 'package:project/Screens/Header.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -50,7 +51,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Nesrine Juini',
+                        'Farah Maryem',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 17),
                       ),
@@ -89,7 +90,14 @@ class _ProfilePageState extends State<ProfilePage> {
                 trailing: InkWell(
                   child:
                       Icon(Icons.arrow_forward_ios, color: Color(0xFF06094C)),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MyVehicule(),
+                          ),
+                        );
+                  },
                 ),
               ),
               SizedBox(
