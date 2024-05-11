@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:project/Provider/UserProvider.dart';
+import 'package:project/Screens/ReadyCharge.dart';
 import 'package:provider/provider.dart';
 
 class CompleteProfilePage extends StatefulWidget {
@@ -203,7 +204,14 @@ class _CompleteProfilePageState extends State<CompleteProfilePage> {
                         'Mail_Address': _emailController.text,
                         'Password': _passwordController.text,
                         'Id_User': uid,
+
                       });
+                       Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ReadyCharge(),
+                          ),
+                        );
                     } catch (e) {
                       // Error occurred while updating profile information, show error message
                       showDialog(

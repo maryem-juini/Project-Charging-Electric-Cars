@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/Screens/AcceptDetails.dart';
 import 'package:project/Screens/CompleteProfile.dart';
 
 class ReadyCharge extends StatefulWidget {
@@ -57,6 +58,12 @@ class _ReadyChargeState extends State<ReadyCharge> {
                     padding: EdgeInsets.only(top: size.height * .1),
                     child: ElevatedButton(
                       onPressed: () {
+                         Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AcceptDetails(),
+                          ),
+                        );
                       },
                       child: Text("Next",
                           style: TextStyle(

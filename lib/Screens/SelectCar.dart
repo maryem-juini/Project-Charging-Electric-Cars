@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:project/Screens/EnterCarDetails.dart';
 
-
-
-
 class Select extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: TextDirection.ltr, 
+      textDirection: TextDirection.ltr,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: SelectCar(),
@@ -17,8 +14,6 @@ class Select extends StatelessWidget {
     );
   }
 }
-
-
 
 class SelectCar extends StatefulWidget {
   @override
@@ -87,7 +82,9 @@ class _SelectCarState extends State<SelectCar> {
           ),
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
         ),
         body: SingleChildScrollView(
@@ -159,27 +156,31 @@ class _SelectCarState extends State<SelectCar> {
                   width: size.width * 0.3,
                   height: size.height * 0.07,
                   child: ElevatedButton(
-                  
-                      onPressed:
-                      () {
-                        if (_selectedCar != null) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EnterCarDetailsPage(
-                              
-                              ),
+                    onPressed: () {
+                      if (_selectedCar != null) {
+                        // Split the selected car into make and model
+                        List<String> carDetails = _selectedCar!.split(' ');
+                        String make = carDetails[0];
+                        String model = carDetails[1];
+
+                        // Navigate to EnterCarDetailsPage and pass the make and model as arguments
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EnterCarDetailsPage(
+                              make: make,
+                              model: model,
                             ),
-                          );
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('Please select a car.'),
-                            ),
-                          );
-                        }
-                      },
-                    
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Please select a car.'),
+                          ),
+                        );
+                      }
+                    },
                     child: Text("Next",
                         style: TextStyle(
                             fontFamily: 'Poppins',

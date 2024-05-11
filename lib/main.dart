@@ -2,8 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:project/Provider/UserProvider.dart';
 import 'package:project/Screens/CompleteProfile.dart';
+import 'package:project/Screens/EnterCarDetails.dart';
 import 'package:project/Screens/LogIn.dart';
-import 'package:project/Screens/SearchPage.dart';
+import 'package:project/Screens/ReadyCharge.dart';
+import 'package:project/Screens/SelectCar.dart';
+import 'package:project/Screens/SplashScreen.dart';
 import 'package:project/Screens/bookPage.dart';
 import 'package:project/Screens/enablelocation.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +32,10 @@ class MyApp extends StatelessWidget {
       create: (context) => UserProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Signup(),
+        // home:CompleteProfilePage(),
+       // home:ReadyCharge(),
+       home: SplashScreen(),
+      // home:Signup(),
       ),
     );
   }
