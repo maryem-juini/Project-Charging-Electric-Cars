@@ -50,7 +50,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'John Doe',
+                        'Nesrine Juini',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 17),
                       ),
@@ -140,7 +140,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
-                        Colors.blue), // Set the button color to blue
+                        Color.fromARGB(255, 228, 34, 12)), // Set the button color to blue
                   ),
                 ),
               ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project/Screens/HomePage.dart';
+import 'package:project/Screens/SelectCar.dart';
 
 class AcceptDetails extends StatefulWidget {
   const AcceptDetails({super.key});
@@ -28,7 +30,9 @@ class _AcceptDetailsState extends State<AcceptDetails> {
           leading: InkWell(
                   child:
                       Icon(Icons.arrow_back_ios, color: Color(0xFF06094C)),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                 ),),
         body: Center(
           child: Column(
@@ -49,7 +53,14 @@ class _AcceptDetailsState extends State<AcceptDetails> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                         Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomePage(),
+                          ),
+                        );
+                      },
                       child: Text(
                         "Later",
                       ),
@@ -89,7 +100,14 @@ class _AcceptDetailsState extends State<AcceptDetails> {
                     Padding(
                       padding: EdgeInsets.only(left: size.width * 0.03),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                           Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Select(),
+                          ),
+                        );
+                        },
                         child: Text(
                           "Add",
                         ),
